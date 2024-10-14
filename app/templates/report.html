@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Rapport de Détection de Plagiat</h1>
+<div id="report-content">
+    {% if result.type == 'multiple' %}
+        <h2>Comparaison entre fichiers</h2>
+        {% for similarity in result.similarities %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ similarity.file1 }} vs {{ similarity.file2 }}</h5>
+                    <p class="card-text">Similarité: {{ "%.2f"|format(similarity.similarity * 100) }}%</p>
+                    <button class="btn btn-primary btn-sm compare-files" data-file1="{{ similarity.file1 }}" data-file2="{{ similarity.file2 }}">
+                        Voir les lignes plagiés
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>Résultats de la recherche web pour {{ result.filename }}</h2>
+        {% for item in result.web_results %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{{ item.link }}" target="_blank">{{ item.title }}</a>
+                    </h5>
+                    <p class="card-text">{{ item.snippet }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div id="file-comparison" class="mt-4" style="display: none;">
+    <h3>Mise en evidence des lignés plagiées</h3>
+    <div class="row">
+        <div class="col-md-6">
+            <h4 id="file1-name"></h4>
+            <pre id="file1-content"></pre>
+        </div>
+        <div class="col-md-6">
+            <h4 id="file2-name"></h4>
+            <pre id="file2-content"></pre>
+        </div>
+    </div>
+</div>
+{% endblock %}

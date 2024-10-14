@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Détecteur de Plagiat</h1>
+<div class="card">
+    <div class="card-body">
+        <form action="{{ url_for('main.index') }}" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="files" class="form-label">Sélectionnez un ou plusieurs fichiers (.txt, .pdf, .docx)</label>
+                <input type="file" class="form-control" id="files" name="files" multiple required>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-upload"></i> Uploader et Analyser
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
