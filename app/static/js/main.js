@@ -1,5 +1,41 @@
 // static/js/main.js
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialiser les icônes Feather
+    feather.replace();
+
+    // Afficher le nom des fichiers sélectionnés
+    const fileInput = document.getElementById('files');
+    if (fileInput) {
+        fileInput.addEventListener('change', function(e) {
+            const fileNames = Array.from(e.target.files).map(file => file.name).join(', ');
+            const fileLabel = document.querySelector('label[for="file"]');
+            fileLabel.innerHTML = `<i data-feather="file-text"></i> ${fileNames || 'Choisissez un ou plusieurs fichiers'}`;
+            feather.replace();
+        });
+    }
+
+    // Ajouter une animation de chargement lors de la soumission du formulaire
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function() {
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Analyse en cours...';
+        });
+    }
+
+
+    // Ajouter des tooltips Bootstrap
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
     const compareButtons = document.querySelectorAll('.compare-files');
     compareButtons.forEach(button => {
         button.addEventListener('click', function() {

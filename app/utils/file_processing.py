@@ -12,7 +12,7 @@ def read_file(file_path):
     elif extension == '.docx':
         return read_docx(file_path)
     else:
-        raise ValueError(f"Unsupported file format: {extension}")
+        raise ValueError(f"Format non supporté: {extension}")
 
 def read_pdf(file_path):
     with open(file_path, 'rb') as f:

@@ -1,18 +1,42 @@
+
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="mb-4">Détecteur de Plagiat</h1>
-<div class="card">
-    <div class="card-body">
-        <form action="{{ url_for('main.index') }}" method="post" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="files" class="form-label">Sélectionnez un ou plusieurs fichiers (.txt, .pdf, .docx)</label>
-                <input type="file" class="form-control" id="files" name="files" multiple required>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">
+                    Uploade fichier(s) 
+                </h1>
+                <form action="{{ url_for('main.index') }}" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">
+                            <i data-feather="upload-cloud" class="me-2"></i>Choisissez un ou plusieurs fichiers
+                        </label>
+                        <input type="file" class="form-control" id="files" name="files" multiple accept=".txt,.pdf,.docx" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i data-feather="check-circle" class="me-2"></i>Analyser
+                        </button>
+                    </div>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-upload"></i> Uploader et Analyser
-            </button>
-        </form>
+        </div>
+        
+        <div class="card mt-4 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title">
+                    Comment ça marche ?
+                </h2>
+                <ol class="list-group list-group-numbered mt-3">
+                    <li class="list-group-item">Uploadez vos fichiers (.txt, .pdf, .docx)</li>
+                    <li class="list-group-item">Notre système analyse le contenu</li>
+                    <li class="list-group-item">Recevez un rapport détaillé de similarité</li>
+                </ol>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

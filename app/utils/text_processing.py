@@ -9,14 +9,14 @@ nltk.download('wordnet')
 nltk.download('punkt_tab')
 
 def preprocess_text(text):
-    # Tokenization
+    # Tokenisation
     tokens = word_tokenize(text.lower())
     
-    # Remove stopwords and punctuation
-    stop_words = set(stopwords.words('english'))
+    # Supprimer les mots vides et la ponctuation
+    stop_words = set(stopwords.words('french'))
     tokens = [token for token in tokens if token.isalnum() and token not in stop_words]
     
-    # Lemmatization
+    # Lemmatisation
     lemmatizer = WordNetLemmatizer()
     lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
     

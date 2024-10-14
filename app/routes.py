@@ -21,7 +21,7 @@ def index():
         files = request.files.getlist('files')
         
         if not files or files[0].filename == '':
-            flash('No selected file', 'error')
+            flash('Aucun fichier sélectionné', 'error')
             return redirect(request.url)
         
         filenames = []
@@ -32,7 +32,7 @@ def index():
                 file.save(file_path)
                 filenames.append(filename)
             else:
-                flash(f'Invalid file format: {file.filename}', 'error')
+                flash(f'Format du fichier invalide: {file.filename}', 'error')
                 return redirect(request.url)
         
         result = analyze_files(filenames)
@@ -52,7 +52,7 @@ def analyze_files(filenames):
         texts.append(preprocessed_text)
     
     if len(texts) > 1:
-        # Compare multiple files
+        # Comparaisons pour plusieurs fichiers
         similarities = []
         for i in range(len(texts)):
             for j in range(i+1, len(texts)):
@@ -68,7 +68,7 @@ def analyze_files(filenames):
             'similarities': similarities
         }
     else:
-        # Web search for a single file
+        # Recherche Web pour un seul fichier
         chunks = split_text(texts[0])
         web_results = []
         for chunk in chunks:
@@ -102,7 +102,7 @@ def split_text(text, chunk_size=1000):
 def send_email_report(result):
     subject = "Plagiarism Detection Report"
     sender = current_app.config['MAIL_USERNAME']
-    recipients = ["ipafadnam6@gmail.com"]  # Replace with actual teacher's email
+    recipients = ["ipafadnam6@gmail.com"]
     
     html_content = render_template('email_report.html', result=result)
     

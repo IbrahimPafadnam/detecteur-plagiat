@@ -3,6 +3,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: 'Helvetica', sans-serif;
+    background-color: #f8f9fa;
 }
 
 .container {
@@ -24,4 +26,52 @@ pre {
 
 .highlighted {
     background-color: yellow;
+}
+
+
+.navbar {
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.card {
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    border-left: 5px solid #4e73df;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,.1);
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2e59d9;
+}
+
+
+.footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+.feather {
+    width: 18px;
+    height: 18px;
+    vertical-align: text-bottom;
+}
+
+
+#file1-content, #file2-content {
+    font-size: 14px;
+    line-height: 1.5;
 }
