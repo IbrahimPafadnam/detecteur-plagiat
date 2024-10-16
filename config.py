@@ -53,5 +53,5 @@ config = {
 }
 
 # Utiliser la configuration par défaut si FLASK_ENV n'est pas défini
-config_name = os.environ.get('FLASK_ENV','development')
+config_name = os.environ.get('FLASK_ENV')
 config = config[config_name]
