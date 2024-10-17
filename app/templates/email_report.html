@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport de Détection de Plagiat</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; }
+        h1 { color: #4a5568; }
+        .result { margin-bottom: 20px; }
+        .similarity { font-weight: bold; color: #2b6cb0; }
+        .source { margin-top: 10px; }
+        .source a { color: #4299e1; text-decoration: none; }
+        .source a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rapport de Détection de Plagiat</h1>
+        
+        {% if result.type == 'multiple' %}
+            <p>Résultats de la comparaison entre fichiers :</p>
+            {% for similarity in result.similarities %}
+                <div class="result">
+                    <p><strong>{{ similarity.file1 }}</strong> vs <strong>{{ similarity.file2 }}</strong></p>
+                    <p class="similarity">Similarité : {{ "%.2f"|format(similarity.similarity * 100) }}%</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Résultats de la recherche web pour le fichier : <strong>{{ result.filename }}</strong></p>
+            {% for item in result.web_results %}
+                <div class="result">
+                    <p><strong>{{ item.title }}</strong></p>
+                    <p>{{ item.snippet }}</p>
+                    <p class="source">Source : <a href="{{ item.link }}">{{ item.link }}</a></p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+    </div>
+</body>
+</html>

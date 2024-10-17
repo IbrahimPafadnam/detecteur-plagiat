@@ -4,11 +4,12 @@ Flask-Migrate
 Flask-Mail
 psycopg2-binary
 nltk
-tensorflow
-tensorflow-hub
+#tensorflow
+#tensorflow-hub
 PyPDF2
 python-docx
 requests
 Werkzeug
 python-dotenv
 gunicorn
+sentence-transformers

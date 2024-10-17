@@ -1,47 +1,78 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2 class="mb-4">Résultat d'analyse(s)</h2>
-<div id="report-content">
+<div class="md:flex md:items-center md:justify-between">
+    <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+            Rapport de Détection de Plagiat
+        </h2>
+    </div>
+</div>
+
+<div class="mt-8" id="report-content">
     {% if result.type == 'multiple' %}
-        <h2>Comparaison entre fichiers</h2>
-        {% for similarity in result.similarities %}
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ similarity.file1 }} vs {{ similarity.file2 }}</h5>
-                    <p class="card-text">Similarité: {{ "%.2f"|format(similarity.similarity * 100) }}%</p>
-                    <button class="btn btn-primary btn-sm compare-files" data-file1="{{ similarity.file1 }}" data-file2="{{ similarity.file2 }}">
-                        Voir les lignes plagiés
-                    </button>
+        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Comparaison entre fichiers</h3>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {% for similarity in result.similarities %}
+                <div class="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                    <div class="flex-1 min-w-0">
+                        <a href="#" class="focus:outline-none">
+                            <span class="absolute inset-0" aria-hidden="true"></span>
+                            <p class="text-sm font-medium text-gray-900">
+                                {{ similarity.file1 }} vs {{ similarity.file2 }}
+                            </p>
+                            <p class="text-sm text-gray-500 truncate">
+                                Similarité: {{ "%.2f"|format(similarity.similarity * 100) }}%
+                            </p>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+                <button class="compare-files inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" data-file1="{{ similarity.file1 }}" data-file2="{{ similarity.file2 }}">
+                    Voir les lignes plagiées
+                </button>
+            {% endfor %}
+        </div>
     {% else %}
-        <h2>Résultats de la recherche web pour {{ result.filename }}</h2>
-        {% for item in result.web_results %}
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a href="{{ item.link }}" target="_blank">{{ item.title }}</a>
-                    </h5>
-                    <p class="card-text">{{ item.snippet }}</p>
-                </div>
-            </div>
-        {% endfor %}
+        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Résultats de la recherche web pour {{ result.filename }}</h3>
+        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <ul class="divide-y divide-gray-200">
+                {% for item in result.web_results %}
+                    <li>
+                        <a href="{{ item.link }}" target="_blank" class="block hover:bg-gray-50">
+                            <div class="px-4 py-4 sm:px-6">
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm font-medium text-indigo-600 truncate">
+                                        {{ item.title }}
+                                    </p>
+                                </div>
+                                <div class="mt-2 sm:flex sm:justify-between">
+                                    <div class="sm:flex">
+                                        <p class="flex items-center text-sm text-gray-500">
+                                            {{ item.snippet }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endif %}
 </div>
 
-<div id="file-comparison" class="mt-4" style="display: none;">
-    <h3>Mise en evidence des lignes plagiées</h3>
-    <div class="row">
-        <div class="col-md-6">
-            <h4 id="file1-name"></h4>
-            <pre id="file1-content"></pre>
-        </div>
-        <div class="col-md-6">
-            <h4 id="file2-name"></h4>
-            <pre id="file2-content"></pre>
-        </div>
-    </div>
+<div id="file-comparison" class="mt-8 hidden">  
+    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Comparaison de fichiers</h3>  
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">  
+        <div class="max-h-screen overflow-y-auto">  
+            <h4 id="file1-name" class="text-sm font-medium text-gray-900 mb-2"></h4>  
+            <pre id="file1-content" class="bg-gray-100 p-4 rounded-md whitespace-pre-wrap"></pre>  
+        </div>  
+        <div class="max-h-screen overflow-y-auto">  
+            <h4 id="file2-name" class="text-sm font-medium text-gray-900 mb-2"></h4>  
+            <pre id="file2-content" class="bg-gray-100 p-4 rounded-md whitespace-pre-wrap"></pre>  
+        </div>  
+    </div>  
 </div>
+
 {% endblock %}

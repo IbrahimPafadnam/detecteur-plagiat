@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fileInput.addEventListener('change', function(e) {
             const fileNames = Array.from(e.target.files).map(file => file.name).join(', ');
             const fileLabel = document.querySelector('label[for="file"]');
-            fileLabel.innerHTML = `<i data-feather="file-text"></i> ${fileNames || 'Choisissez un ou plusieurs fichiers'}`;
+            fileLabel.innerHTML = `<i data-feather="file-text" class="block text-sm font-medium text-gray-700"></i> ${fileNames || 'Sélectionnez un ou plusieurs fichiers (.txt, .pdf, .docx)'}`;
             feather.replace();
         });
     }
@@ -79,7 +79,7 @@ function displayComparison(file1, content1, file2, content2) {
     document.getElementById('file1-content').innerHTML = highlightedContent1;
     document.getElementById('file2-content').innerHTML = highlightedContent2;
     
-    document.getElementById('file-comparison').style.display = 'block';
+    document.getElementById('file-comparison').classList.remove('hidden');
 }
 
 function highlightSimilarities(text1, text2) {
@@ -88,7 +88,7 @@ function highlightSimilarities(text1, text2) {
     
     return words1.map(word => {
         if (words2.includes(word)) {
-            return `<span class="highlighted">${word}</span>`;
+            return `<span class="bg-yellow-200">${word}</span>`;
         }
         return word;
     }).join(' ');
